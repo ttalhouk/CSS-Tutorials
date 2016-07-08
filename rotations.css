@@ -1,0 +1,30 @@
+Spinning modal close
+
+.modal-close {
+  font-size: 200%;
+  right: 15px;
+  top: 0px;
+  position: absolute;
+  transition: transform 4s ease-out;
+  /* ease-out slows down at end of animation */
+}
+
+.modal-close:hover {
+  transform: rotate(360deg);
+  /*transform: rotate(1turn); alternatively*/
+}
+
+Input label transition
+
+.form-input + .form-label {
+  position: relative;
+  padding: 0;
+  color: #6A7989;
+  transform-origin: center left;
+  transition: all .4s;
+}
+.form-input:focus + .form-label{
+  color: #333333;
+  transform: scale(.8), translateY(-40px);
+
+}

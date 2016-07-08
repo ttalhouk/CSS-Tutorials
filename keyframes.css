@@ -1,0 +1,16 @@
+@keyframes swing {
+  0%{transform: rotate(0deg);}
+  100%{transform: rotate(-10deg);}
+}
+
+#left-arm{
+  transform-origin: top center;
+  animation: swing 2s 0s infinate ease;
+}
+
+/* animation: name time delay num-iterations timing-function */
+
+#right-arm{
+  transform-origin: top center;
+  animation: swing 2s 0s infinate ease;
+}
