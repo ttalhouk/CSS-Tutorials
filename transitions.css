@@ -1,0 +1,84 @@
+/*TRANSITIONS*/
+
+.btn {
+  background-color: #00A0D6;
+  transition: background-color 0.4s;
+}
+
+.btn:hover {
+  background-color: #007DA7;
+}
+
+/* transition: property duration , 2nd property duration */
+/* transition: (property ||= all) (duration) (timing function ||= ease) (delay ||=0) */
+
+/* caniuse.com will tell you which properties need prefixes for which browsers */
+
+/*Steps for transitioning position
+1. create 2 inner spans for current and additional info
+2. style initial and hover states
+3. create transition */
+
+<a href="#" class="btn buy-button">
+  <span class="top content">Buy Now</span>
+  <span class="btm content">Only $59.99</span>
+</a>
+
+.btn {
+  position: relative;
+}
+.content {
+  postion: absolute;
+  transition: top 0.3s;
+  overflow: hidden;
+}
+.top {
+  top: 0;
+}
+.btm {
+  top: 100px;
+}
+.btn:hover .top{
+  top: -100px;
+}
+.btn:hover .btm{
+  top: 0px;
+}
+
+/*Modal overlays*/
+/*Don't use display:none  <-- not transitionalble*/
+
+.modal, .modal-overlay {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.modal.active, .modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*Add shing*/
+.shing {
+  position: relative;
+}
+
+.shing::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  content: '';
+
+  box-shadow: inset 0 2px #FFF;
+  background: -50px center no-repeat;
+  background-image: linear-gradient(125deg,rgba(255,255,255,0) 30%,#FFF 30%,#FFF 50%,rgba(255,255,255,0) 50%);
+  background-clip: padding-box;
+  opacity: .3;
+  transition: background-position 0.07s .4s;
+}
+
+.shing:hover:after {
+  background-position: 100px center;
+}
