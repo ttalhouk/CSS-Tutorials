@@ -1,16 +1,123 @@
+/*keyframe animations*/
+
 @keyframes swing {
-  0%{transform: rotate(0deg);}
-  100%{transform: rotate(-10deg);}
+  0%,50%,100%{transform: rotate(0deg);}
+  25%,75%{transform: rotate(-10deg);}
 }
 
 #left-arm{
   transform-origin: top center;
-  animation: swing 2s 0s infinate ease;
+  animation: swing 2s 0s infinite ease;
 }
 
-/* animation: name time delay num-iterations timing-function */
+/* animation: name time delay num-iterations timing-function fillmode*/
 
 #right-arm{
   transform-origin: top center;
-  animation: swing 2s 0s infinate ease;
+  animation: swing 2s 1s infinate ease;
+}
+
+@keyframes tap {
+  0%, 100%{transform: translateY(0px);}
+  50%{transform: translateY(5px);}
+}
+
+#left-leg{
+  animation: tap 1s 0s infinite ease;
+}
+
+/*animating the modal to overshoot and have different speeds for the insides*/
+
+@keyframes fade-in{
+  from{
+    opacity:0;
+    visibility: hidden;
+  }
+  to{
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.modal-overlay.active{
+  animation: fade-in .25 forwards;
+}
+
+@keyframes slide-up {
+  from{
+    transform: translateY(400px);
+  }
+  to{
+    transform: translateY(-300px);
+  }
+}
+
+.modal.active{
+  animation: slide-up .65s .5s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards,
+    fade-in .65s .5s forwards;
+}
+
+@keyframes slideUpSmall {
+  from{
+    transform: translateY(80px);
+  }
+  to{
+    transform: translateY(0px);
+  }
+}
+
+.modal-header h3{
+  animation: slideUpSmall .25s .75s forwards,
+    fade-in .25s .75s forwards;
+}
+.modal.active .form-field{
+  animation: slideUpSmall .25s .8s forwards,
+    fade-in .25s .8s forwards;
+}
+
+/*Working with an SVG image*/
+
+@keyframes darken {
+  0%{fill: #FCA9B7;}
+  100%{fill: #DD3D93;}
+}
+
+#icing-fill{
+  animation: darken 3s infinite;
+  animation: shake 3s infinite ease-out;
+}
+
+@keyframes flyoff {
+  0%{transform: rotate(0deg);}
+  10%{transform: rotate(30deg);}
+  20%{transform: rotate(0deg);}
+  30%{transform: rotate(-30deg);}
+  40%{transform: rotate(0deg);}
+  45%{opacity:1;}
+  50%{
+    transform: rotate(100deg) scale(3);
+    opacity:0;
+  }
+  100%{
+    transform: scale(1);
+    opacity:0;
+  }
+}
+#sprinkles{
+  transition: transform 2s;
+  transform-origin: 302px 337px;
+  animation: flyoff 3s infinite ease-in;
+}
+@keyframes shake {
+  0%{transform: rotate(0deg);}
+  10%{transform: rotate(30deg);}
+  20%{transform: rotate(0deg);}
+  30%{transform: rotate(-30deg);}
+  40%{transform: rotate(0deg);}
+  50%{transform: rotate(100deg);}
+}
+
+
+#icing-outline{
+  animation: shake 3s infinite ease-out;
 }
