@@ -155,6 +155,211 @@ h2 {
 ```
 
 ### String Interpolation
+
 Similar to Ruby `#{$variable}`
 
 ## Mixins
+
+Used to help combat repetition in styles
+```SCSS
+@mixin button{
+  ... properties shared by all buttons
+}
+
+.btn-a{
+  @include button; //includes the styles set in button mixin
+  ... other styles for .btn-a
+}
+```
+***`@mixin` must be declared before using the `@include`***
+
+This still compiles down to the repeated CSS after compiling.  However Mixins can take arguments.
+
+```SCSS
+@mixin box-sizing($x) {
+   -webkit-box-sizing: $x;
+   -moz-box-sizing: $x;
+   box-sizing: $x;
+}
+.content {
+  @include box-sizing(border-box); // $x is border-box
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+.callout {
+  @include box-sizing(content-box);// $x is content-box
+}
+```
+Default values can be set for the arguments
+```SCSS
+@mixin box-sizing($x: border-box) {
+   -webkit-box-sizing: $x;
+   -moz-box-sizing: $x;
+   box-sizing: $x;
+}
+```
+Multiple arguments can be passed, but defaults must come at the end.
+
+Arguments can be key value pairs.
+```SCSS
+@mixin button($radius, $color: #000) {
+  border-radius: $radius;
+  color: $color;
+}
+.btn-a {
+  @include button($color: #777777,
+$radius: 5px); // order of arguments not important if passed with keys
+}
+```
+For arguments that take multiple values
+```SCSS
+@mixin transition($val...) { // use variable... notation
+  -webkit-transition: $val;
+  -moz-transition: $val;
+  transition: $val;
+}
+.btn-a {
+  @include transition(color 0.3s
+ease-in, background 0.5s ease-out);
+}
+```
+
+```
+@mixin highlight-t($color) {
+  border-top-color: $color;
+}
+@mixin highlight-r($color) {
+   border-right-color: $color;
+ }
+ @mixin highlight-b($color) {
+   border-bottom-color: $color;
+ }
+ @mixin highlight-l($color) {
+   border-left-color: $color;
+ }
+.btn-a {
+@include highlight-r(#ff0);
+}
+
+// can be refactored using string Interpolation
+
+@mixin highlight($color, $side) {   border-#{$side}-color: $color; }
+.btn-a {
+  @include highlight(#ff0, right);
+}
+
+```
+
+## Extend
+Inheritance of styles from classes using `@extend`
+```scss
+.btn-a {
+  background: #777;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  text-transform: uppercase;
+}
+.btn-b {
+  @extend .btn-a;
+  background: #ff0;
+}
+```
+**Caution: any changes made to btn-a are inherited by btn-b through @extend**
+
+Alternately use placeholder selectors `%`
+```scss
+%btn{
+  background: #777;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  text-transform: uppercase;
+}
+.btn-a {
+  @extend %btn;
+}
+.btn-b {
+  @extend %btn;
+  background: #ff0;
+}
+```
+
+## Directive
+
+Using functions within Scss
+```scss
+@function fluidize($target, $context) {
+  @return ($target / $context) * 100%;
+}
+.sidebar {
+  width: fluidize(350px, 1000px);
+}
+
+// results in css compiled to
+.sidebar {
+  width: 35%;
+}
+```
+Also allows for If statements
+```
+$theme: pink;
+ header {
+   @if $theme == dark {
+     background: #000;
+   } @else if $theme == pink {
+     background: pink;
+   } @else {
+     background: #fff;
+   }
+}
+```
+Each loops
+```
+.item {
+  position: absolute;
+  right: 0;
+  @for $i from 1 through 3 {
+    &.item-#{$i} {
+      top: $i * 30px;
+    }
+  }
+}
+// increases the size for each item
+```
+
+## Math and Color
+
+* `round($number)` - round to closest whole number
+* `ceil($number)` - round up
+* `floor($number)` - round down
+* `abs($number)` - absolute value
+* `min($list)` - minimum list value
+* `max($list)` - maximum list value
+* `percentage($number)` - convert to percentage
+
+Color functions are available as well
+
+## Responsive
+
+**Media Queries**
+```
+.sidebar {
+   border: 1px solid #ccc;
+ }
+ @media (min-width: 700px) { // checks size of viewport
+   .sidebar {
+     float: right;
+     width: 30%;
+} }
+```
+Responsive mix-in
+```
+@mixin respond-to($type: min-width, $query: 960px ) {
+  @media ($type: $query) {
+    @content;
+  }
+}
+```
+
+## Installing Sass
+
+`gem instal sass`
