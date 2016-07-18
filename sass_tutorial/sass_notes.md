@@ -163,12 +163,12 @@ Similar to Ruby `#{$variable}`
 Used to help combat repetition in styles
 ```SCSS
 @mixin button{
-  ... properties shared by all buttons
+  // ... properties shared by all buttons
 }
 
 .btn-a{
   @include button; //includes the styles set in button mixin
-  ... other styles for .btn-a
+  // ... other styles for .btn-a
 }
 ```
 ***`@mixin` must be declared before using the `@include`***
